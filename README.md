@@ -1,5 +1,6 @@
 # Wahlzeit: Open Source Software for Photo Rating Sites
 
+[![Build Status](https://travis-ci.org/jsone-studios/wahlzeit.svg?branch=master)](https://travis-ci.org/jsone-studios/wahlzeit)
 
 ## PART I: INTRODUCTION
 
