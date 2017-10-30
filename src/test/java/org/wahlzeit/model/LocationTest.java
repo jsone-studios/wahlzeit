@@ -20,25 +20,23 @@
 
 package org.wahlzeit.model;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
- * A Location on earth where a photo is taken.
+ * Test cases for the {@link Location} class.
  */
-public class Location {
+public class LocationTest {
+	private static final double DELTA = 1E-6;
 
-	protected Coordinate coordinate;
-
-	public Location(Coordinate coordinate) {
-		this.coordinate = coordinate;
-	}
-
-	public Coordinate getCoordinate() {
-		return coordinate;
-	}
-
-	@Override
-	public String toString() {
-		return "Location{" +
-				"coordinate=" + coordinate +
-				'}';
+	@Test
+	public void testGetCoordinate() {
+		Coordinate coordinate = new Coordinate(1, 1, 1);
+		Location location = new Location(coordinate);
+		Coordinate result = location.getCoordinate();
+		Assert.assertNotNull(result);
+		Assert.assertEquals(1, result.getX(), DELTA);
+		Assert.assertEquals(1, result.getY(), DELTA);
+		Assert.assertEquals(1, result.getZ(), DELTA);
 	}
 }
