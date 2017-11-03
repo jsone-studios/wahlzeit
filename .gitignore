@@ -1,4 +1,5 @@
-/bin/
+/bin
+/out
 /build
 /classes
 /src/main/webapp/WEB-INF/lib/

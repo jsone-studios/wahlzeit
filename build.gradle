@@ -59,10 +59,14 @@ dependencies {
 }
 
 test {
-    filter {
-        includeTestsMatching "org.wahlzeit.*"
-    }
+    exclude '**/*TestSuite.class'
 }
+
+//test {
+//    filter {
+//        includeTestsMatching "org.wahlzeit.*"
+//    }
+//}
 
 appengine {
     httpPort = 8080
