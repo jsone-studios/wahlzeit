@@ -20,27 +20,45 @@
 
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.PersistenceTestSuite;
+import com.googlecode.objectify.annotation.Subclass;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-		AccessRightsTest.class,
-		BeachPhotoFactoryTest.class,
-		BeachPhotoManagerTest.class,
-		CoordinateTest.class,
-		CoordinateEqualsTest.class,
-		FlagReasonTest.class,
-		GenderTest.class,
-		GuestTest.class,
-		LocationTest.class,
-		PhotoFilterTest.class,
-		TagsTest.class,
-		UserStatusTest.class,
-		ValueTest.class,
+@Subclass
+public class BeachPhoto extends Photo {
+	private String weather;
+	private boolean hasSharks;
 
-		PersistenceTestSuite.class,
-})
-public class ModelTestSuite {
+	/**
+	 * @methodtype constructor
+	 */
+	public BeachPhoto() {
+	}
+
+	/**
+	 * @methodtype constructor
+	 */
+	public BeachPhoto(PhotoId myId) {
+		super(myId);
+	}
+
+	/**
+	 * @methodtype get
+	 */
+	public String getWeather() {
+		return weather;
+	}
+
+	/**
+	 * @methodtype set
+	 */
+	public void setWeather(String weather) {
+		this.weather = weather;
+	}
+
+	public boolean hasSharks() {
+		return hasSharks;
+	}
+
+	public void setHasSharks(boolean hasSharks) {
+		this.hasSharks = hasSharks;
+	}
 }

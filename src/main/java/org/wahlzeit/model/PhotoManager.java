@@ -30,14 +30,7 @@ import org.wahlzeit.services.Persistent;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -48,7 +41,7 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 *
 	 */
-	protected static final PhotoManager instance = new PhotoManager();
+	protected static PhotoManager instance = null;
 
 	private static final Logger log = Logger.getLogger(PhotoManager.class.getName());
 
@@ -70,10 +63,26 @@ public class PhotoManager extends ObjectManager {
 	}
 
 	/**
-	 *
+	 * Public singleton access method.
 	 */
-	public static final PhotoManager getInstance() {
+	public static synchronized PhotoManager getInstance() {
+		if (instance == null) {
+			log.config(LogBuilder.createSystemMessage().addAction("setting generic PhotoManager").toString());
+			setInstance(new BeachPhotoManager());
+		}
+
 		return instance;
+	}
+
+	/**
+	 * Method to set the singleton instance of PhotoFactory.
+	 */
+	protected static synchronized void setInstance(PhotoManager photoManager) {
+		if (instance != null) {
+			throw new IllegalStateException("attempt to initialize PhotoManager twice");
+		}
+
+		instance = photoManager;
 	}
 
 	/**
@@ -94,7 +103,7 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public final Photo getPhoto(PhotoId id) {
-		return instance.getPhotoFromId(id);
+		return getPhotoFromId(id);
 	}
 
 	/**
@@ -307,14 +316,14 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 * @methodtype get
 	 */
-	public Map<PhotoId, Photo> getPhotoCache() {
+	public Map<PhotoId, ? extends Photo> getPhotoCache() {
 		return photoCache;
 	}
 
 	/**
 	 *
 	 */
-	public Set<Photo> findPhotosByOwner(String ownerName) {
+	public Set<? extends Photo> findPhotosByOwner(String ownerName) {
 		Set<Photo> result = new HashSet<Photo>();
 		readObjects(result, Photo.class, Photo.OWNER_ID, ownerName);
 

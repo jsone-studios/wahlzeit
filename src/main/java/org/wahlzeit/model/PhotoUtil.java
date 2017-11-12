@@ -53,6 +53,22 @@ public class PhotoUtil {
 	}
 
 	/**
+	 * @methodtype creation
+	 */
+	public static BeachPhoto createBeachPhoto(String filename, PhotoId id, Image uploadedImage) throws Exception {
+		BeachPhoto result = BeachPhotoFactory.getInstance().createPhoto(id);
+		result.setEnding(filename.substring(filename.lastIndexOf(".") + 1));
+
+		createImageFiles(uploadedImage, result);
+
+		int sourceWidth = uploadedImage.getWidth();
+		int sourceHeight = uploadedImage.getHeight();
+		result.setWidthAndHeight(sourceWidth, sourceHeight);
+
+		return result;
+	}
+
+	/**
 	 *
 	 */
 	public static void createImageFiles(Image source, Photo photo) throws Exception {
