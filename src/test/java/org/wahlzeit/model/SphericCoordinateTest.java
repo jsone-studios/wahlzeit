@@ -20,14 +20,6 @@
 
 package org.wahlzeit.model;
 
-public interface Coordinate {
-	CartesianCoordinate asCartesianCoordinate();
-	//double getCartesianDistance();//TODO: What is a cartesian distance?!
-
-	SphericCoordinate asSphericCoordinate();
-	//double getSphericDistance();//TODO: What is a spheric distance?!
-
-	double getDistance(Coordinate other);
-
-	boolean isEqual(Coordinate coordinate);
+public class SphericCoordinateTest {
+	//TODO: add tests
 }

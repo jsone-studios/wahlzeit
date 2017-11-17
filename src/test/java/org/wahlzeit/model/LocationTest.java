@@ -27,16 +27,13 @@ import org.junit.Test;
  * Test cases for the {@link Location} class.
  */
 public class LocationTest {
-	private static final double DELTA = 1E-6;
 
 	@Test
 	public void testGetCoordinate() {
-		Coordinate coordinate = new Coordinate(1, 1, 1);
+		CartesianCoordinate coordinate = new CartesianCoordinate(1, 1, 1);
 		Location location = new Location(coordinate);
 		Coordinate result = location.getCoordinate();
 		Assert.assertNotNull(result);
-		Assert.assertEquals(1, result.getX(), DELTA);
-		Assert.assertEquals(1, result.getY(), DELTA);
-		Assert.assertEquals(1, result.getZ(), DELTA);
+		Assert.assertEquals(coordinate, result);
 	}
 }
