@@ -67,14 +67,46 @@ public class CartesianCoordinate implements Coordinate {
 		return new SphericCoordinate(latitude, longitude, radius);
 	}
 
+	/**
+	 * Calculates the direct distance between this object and the given coordinate.
+	 * Delegates to {@link #getCartesianDistance(Coordinate)}
+	 *
+	 * @param other Coordinate
+	 * @return the direct distance
+	 */
 	@Override
 	public double getDistance(Coordinate other) {
+		return getCartesianDistance(other);
+	}
+
+	/**
+	 * Calculates the direct distance between this object and the given coordinate.
+	 * If the given coordinate is not a {@link CartesianCoordinate} it is transformed to one.
+	 *
+	 * @param other Coordinate
+	 * @return the direct distance
+	 */
+	@Override
+	public double getCartesianDistance(Coordinate other) {
 		CartesianCoordinate cartesianCoordinate = other.asCartesianCoordinate();
 		double dx = this.getX() - cartesianCoordinate.getX();
 		double dy = this.getY() - cartesianCoordinate.getY();
 		double dz = this.getZ() - cartesianCoordinate.getZ();
 
 		return Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
+	}
+
+	/**
+	 * Calculates the spheric distance between this object and the given coordinate.
+	 * This delegates the call to the {@link Coordinate#getSphericDistance(Coordinate)} implementation of the {@link SphericCoordinate}
+	 *
+	 * @param other Coordinate
+	 * @return the spheric distance
+	 */
+	@Override
+	public double getSphericDistance(Coordinate other) {
+		SphericCoordinate thisAsSpheric = this.asSphericCoordinate();
+		return thisAsSpheric.getSphericDistance(other);
 	}
 
 	/**

@@ -22,11 +22,32 @@ package org.wahlzeit.model;
 
 public interface Coordinate {
 	CartesianCoordinate asCartesianCoordinate();
-	//double getCartesianDistance();//TODO: What is a cartesian distance?!
+
+	/**
+	 * Calculates the direct distance between this object and the given coordinate.
+	 *
+	 * @param other Coordinate
+	 * @return the direct distance
+	 */
+	double getCartesianDistance(Coordinate other);
 
 	SphericCoordinate asSphericCoordinate();
-	//double getSphericDistance();//TODO: What is a spheric distance?!
 
+	/**
+	 * Calculates the spheric distance between this object and the given coordinate.
+	 *
+	 * @param other Coordinate
+	 * @return the spheric distance
+	 */
+	double getSphericDistance(Coordinate other);
+
+	/**
+	 * Calculates the direct distance between this object and the given coordinate.
+	 * This should be the same as {@link Coordinate#getCartesianDistance(Coordinate)}
+	 *
+	 * @param other Coordinate
+	 * @return the direct distance
+	 */
 	double getDistance(Coordinate other);
 
 	boolean isEqual(Coordinate coordinate);

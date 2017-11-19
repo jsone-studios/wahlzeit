@@ -20,6 +20,46 @@
 
 package org.wahlzeit.model;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 public class SphericCoordinateTest {
-	//TODO: add tests
+
+	private static final double DELTA = 1E-6;
+
+	@Test
+	public void testGetSphericDistance() {
+		SphericCoordinate base = new SphericCoordinate(0.23, 0.86, 4);
+		assertEquals(0.0, base.getSphericDistance(new SphericCoordinate(0.23, 0.86, 4)), DELTA);
+		assertEquals(0.0, base.getSphericDistance(new SphericCoordinate(0.23, 0.86, 6)), DELTA);
+
+		assertEquals(2.96, base.getSphericDistance(new SphericCoordinate(-0.4, 0.12, 4)), DELTA);
+		assertEquals(2.96, base.getSphericDistance(new SphericCoordinate(-0.4, 0.12, 9)), DELTA);
+	}
+
+	@Test
+	public void testAsSphericCoordinate() {
+		SphericCoordinate base1 = new SphericCoordinate(0.23, 0.84, 1);
+		assertEquals(new SphericCoordinate(0.23, 0.84, 1), base1.asSphericCoordinate());
+	}
+
+	@Test
+	public void testAsCartesianCoordinate() {
+		SphericCoordinate spheric = new SphericCoordinate(0.28, 0.37, 5);
+		CartesianCoordinate cartesian = new CartesianCoordinate(1.288269, 0.499672, 4.805277);
+		assertEquals(cartesian, spheric.asCartesianCoordinate());
+
+		spheric = new SphericCoordinate(0.28, -0.37, 5);
+		cartesian = new CartesianCoordinate(1.288269, -0.499672, 4.805277);
+		assertEquals(cartesian, spheric.asCartesianCoordinate());
+
+		spheric = new SphericCoordinate(-0.28, 0.37, 5);
+		cartesian = new CartesianCoordinate(-1.288269, -0.499672, 4.805277);
+		assertEquals(cartesian, spheric.asCartesianCoordinate());
+
+		spheric = new SphericCoordinate(-0.28, -0.37, 5);
+		cartesian = new CartesianCoordinate(-1.288269, 0.499672, 4.805277);
+		assertEquals(cartesian, spheric.asCartesianCoordinate());
+	}
 }

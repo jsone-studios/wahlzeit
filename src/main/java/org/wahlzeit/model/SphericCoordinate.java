@@ -22,8 +22,11 @@ package org.wahlzeit.model;
 
 import com.google.common.base.Objects;
 
+import java.util.logging.Logger;
+
 public class SphericCoordinate implements Coordinate {
 	private static final double DELTA = 1E-6;
+	private static final Logger log = Logger.getLogger(SphericCoordinate.class.getName());
 
 	private double latitude;
 	private double longitude;
@@ -60,10 +63,49 @@ public class SphericCoordinate implements Coordinate {
 		return this;
 	}
 
+	/**
+	 * Calculates the direct distance between this object and the given coordinate.
+	 * Delegates to {@link #getCartesianDistance(Coordinate)} (Coordinate)}
+	 *
+	 * @param other Coordinate
+	 * @return the direct distance
+	 */
 	@Override
 	public double getDistance(Coordinate other) {
+		return getCartesianDistance(other);
+	}
+
+	/**
+	 * Calculates the direct distance between this object and the given coordinate.
+	 * This delegates the call to the {@link Coordinate#getCartesianDistance(Coordinate)} implementation of the {@link CartesianCoordinate}
+	 *
+	 * @param other Coordinate
+	 * @return the direct distance
+	 */
+	@Override
+	public double getCartesianDistance(Coordinate other) {
 		CartesianCoordinate thisAsCartesian = this.asCartesianCoordinate();
-		return thisAsCartesian.getDistance(other);
+		return thisAsCartesian.getCartesianDistance(other);
+	}
+
+	/**
+	 * Calculates the spheric distance between this object and the given coordinate.
+	 * If the given coordinate is not a {@link SphericCoordinate} it is transformed to one.
+	 *
+	 * @param other Coordinate
+	 * @return the spheric distance
+	 */
+	@Override
+	public double getSphericDistance(Coordinate other) {
+		SphericCoordinate otherAsSpheric = other.asSphericCoordinate();
+		double a = Math.cos(this.longitude) * Math.cos(otherAsSpheric.longitude) * Math.cos(this.latitude - this.latitude)
+				+ Math.sin(this.longitude) * Math.sin(otherAsSpheric.longitude);
+		double distance = Math.acos(a);
+		if (Double.compare(this.radius, otherAsSpheric.radius) != 0) {
+			log.warning("Can not calculate SphericDistance of two spheric coordinates with different radius!");
+		}
+		
+		return this.radius * distance;
 	}
 
 	/**
