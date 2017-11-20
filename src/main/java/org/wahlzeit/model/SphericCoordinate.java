@@ -24,8 +24,11 @@ import com.google.common.base.Objects;
 
 import java.util.logging.Logger;
 
-public class SphericCoordinate implements Coordinate {
-	private static final double DELTA = 1E-6;
+/**
+ * SphericCoordinate represents spheric coordinates on earth.
+ */
+public class SphericCoordinate extends AbstractCoordinate {
+
 	private static final Logger log = Logger.getLogger(SphericCoordinate.class.getName());
 
 	private double latitude;
@@ -65,25 +68,16 @@ public class SphericCoordinate implements Coordinate {
 
 	/**
 	 * Calculates the direct distance between this object and the given coordinate.
-	 * Delegates to {@link #getCartesianDistance(Coordinate)} (Coordinate)}
-	 *
-	 * @param other Coordinate
-	 * @return the direct distance
-	 */
-	@Override
-	public double getDistance(Coordinate other) {
-		return getCartesianDistance(other);
-	}
-
-	/**
-	 * Calculates the direct distance between this object and the given coordinate.
 	 * This delegates the call to the {@link Coordinate#getCartesianDistance(Coordinate)} implementation of the {@link CartesianCoordinate}
 	 *
 	 * @param other Coordinate
-	 * @return the direct distance
+	 * @return the direct distance, or {@link Double#NaN} if other is <code>null</code>
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate other) {
+		if (other == null) {
+			return Double.NaN;
+		}
 		CartesianCoordinate thisAsCartesian = this.asCartesianCoordinate();
 		return thisAsCartesian.getCartesianDistance(other);
 	}
@@ -93,10 +87,13 @@ public class SphericCoordinate implements Coordinate {
 	 * If the given coordinate is not a {@link SphericCoordinate} it is transformed to one.
 	 *
 	 * @param other Coordinate
-	 * @return the spheric distance
+	 * @return the spheric distance, or {@link Double#NaN} if other is <code>null</code
 	 */
 	@Override
 	public double getSphericDistance(Coordinate other) {
+		if (other == null) {
+			return Double.NaN;
+		}
 		SphericCoordinate otherAsSpheric = other.asSphericCoordinate();
 		double a = Math.cos(this.longitude) * Math.cos(otherAsSpheric.longitude) * Math.cos(this.latitude - this.latitude)
 				+ Math.sin(this.longitude) * Math.sin(otherAsSpheric.longitude);
@@ -108,47 +105,21 @@ public class SphericCoordinate implements Coordinate {
 		return this.radius * distance;
 	}
 
-	/**
-	 * This compares two double values on equality.
-	 * It checks if the doubles are equal within {@link CartesianCoordinate#DELTA}.
-	 *
-	 * @param a first double value
-	 * @param b second double value
-	 * @return true if a and b are mathematical equal, false otherwise
-	 */
-	private boolean isDoubleEqual(double a, double b) {
-		return Math.abs(a - b) <= DELTA;
-	}
-
 	private boolean isEqual(SphericCoordinate other) {
-		if (other == null) {
-			return false;
-		} else if (this == other) {
-			return true;
-		} else return isDoubleEqual(this.getLatitude(), other.getLatitude())
-				&& isDoubleEqual(this.getLongitude(), other.getLongitude())
-				&& isDoubleEqual(this.getRadius(), other.getRadius());
+		return this == other
+				|| (isDoubleEqual(this.latitude, other.latitude)
+				&& isDoubleEqual(this.longitude, other.longitude)
+				&& isDoubleEqual(this.radius, other.radius));
 	}
 
 	@Override
 	public boolean isEqual(Coordinate other) {
-		if (other == null) {
-			return false;
-		} else if (this == other) {
+		if (this == other) {
 			return true;
 		} else if (other instanceof SphericCoordinate) {
 			return isEqual((SphericCoordinate) other);
 		}
 		return false;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Coordinate)) {
-			return false;
-		}
-		Coordinate other = (Coordinate) obj;
-		return isEqual(other);
 	}
 
 	@Override

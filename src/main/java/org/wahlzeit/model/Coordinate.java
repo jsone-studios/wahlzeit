@@ -27,7 +27,7 @@ public interface Coordinate {
 	 * Calculates the direct distance between this object and the given coordinate.
 	 *
 	 * @param other Coordinate
-	 * @return the direct distance
+	 * @return the direct distance, or {@link Double#NaN} if other is <code>null</code
 	 */
 	double getCartesianDistance(Coordinate other);
 
@@ -37,7 +37,7 @@ public interface Coordinate {
 	 * Calculates the spheric distance between this object and the given coordinate.
 	 *
 	 * @param other Coordinate
-	 * @return the spheric distance
+	 * @return the spheric distance, or {@link Double#NaN} if other is <code>null</code
 	 */
 	double getSphericDistance(Coordinate other);
 
@@ -46,7 +46,7 @@ public interface Coordinate {
 	 * This should be the same as {@link Coordinate#getCartesianDistance(Coordinate)}
 	 *
 	 * @param other Coordinate
-	 * @return the direct distance
+	 * @return the direct distance, or {@link Double#NaN} if other is <code>null</code
 	 */
 	double getDistance(Coordinate other);
 
