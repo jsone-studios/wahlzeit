@@ -31,7 +31,6 @@ public class SphericCoordinateTest {
 	@Test
 	public void testGetSphericDistance() {
 		SphericCoordinate base = new SphericCoordinate(0.23, 0.86, 4);
-		assertEquals(Double.NaN, base.getSphericDistance(null), DELTA);
 		assertEquals(0.0, base.getSphericDistance(new SphericCoordinate(0.23, 0.86, 4)), DELTA);
 		assertEquals(0.0, base.getSphericDistance(new SphericCoordinate(0.23, 0.86, 6)), DELTA);
 

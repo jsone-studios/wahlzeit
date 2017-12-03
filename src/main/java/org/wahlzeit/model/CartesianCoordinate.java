@@ -50,12 +50,12 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	}
 
 	@Override
-	public CartesianCoordinate asCartesianCoordinate() {
+	protected CartesianCoordinate doAsCartesianCoordinate() {
 		return this;
 	}
 
 	@Override
-	public SphericCoordinate asSphericCoordinate() {
+	protected SphericCoordinate doAsSphericCoordinate() {
 		double radius = Math.sqrt(x * x + y * y + z * z);
 		if (radius == 0.0) {
 			return new SphericCoordinate(0.0, 0.0, 0.0);
@@ -65,23 +65,12 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		return new SphericCoordinate(latitude, longitude, radius);
 	}
 
-	/**
-	 * Calculates the direct distance between this object and the given coordinate.
-	 * If the given coordinate is not a {@link CartesianCoordinate} it is transformed to one.
-	 *
-	 * @param other Coordinate
-	 * @return the direct distance, or {@link Double#NaN} if other is <code>null</code
-	 */
 	@Override
-	public double getCartesianDistance(Coordinate other) {
-		if (other == null) {
-			return Double.NaN;
-		}
+	protected double doGetCartesianDistance(Coordinate other) {
 		CartesianCoordinate cartesianCoordinate = other.asCartesianCoordinate();
 		double dx = this.x - cartesianCoordinate.x;
 		double dy = this.y - cartesianCoordinate.y;
 		double dz = this.z - cartesianCoordinate.z;
-
 		return Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
 	}
 
@@ -89,14 +78,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * Calculates the spheric distance between this object and the given coordinate.
 	 * This delegates the call to the {@link Coordinate#getSphericDistance(Coordinate)} implementation of the {@link SphericCoordinate}
 	 *
-	 * @param other Coordinate
-	 * @return the spheric distance, or {@link Double#NaN} if other is <code>null</code
+	 * @param other Coordinate, should not be <code>null</code>
+	 * @return the spheric distance
 	 */
 	@Override
-	public double getSphericDistance(Coordinate other) {
-		if (other == null) {
-			return Double.NaN;
-		}
+	protected double doGetSphericDistance(Coordinate other) {
 		SphericCoordinate thisAsSpheric = this.asSphericCoordinate();
 		return thisAsSpheric.getSphericDistance(other);
 	}

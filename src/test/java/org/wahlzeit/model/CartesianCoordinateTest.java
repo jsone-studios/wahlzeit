@@ -34,7 +34,6 @@ public class CartesianCoordinateTest {
 	@Test
 	public void testGetCartesianDistance() {
 		CartesianCoordinate base1 = new CartesianCoordinate(0, 0, 0);
-		assertEquals(Double.NaN, base1.getCartesianDistance(null), DELTA);
 		assertEquals(1, base1.getCartesianDistance(new CartesianCoordinate(1, 0, 0)), DELTA);
 		assertEquals(2, base1.getCartesianDistance(new CartesianCoordinate(0, 2, 0)), DELTA);
 		assertEquals(3.5, base1.getCartesianDistance(new CartesianCoordinate(0, 0, 3.5)), DELTA);

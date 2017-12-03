@@ -28,7 +28,6 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static java.lang.Double.*;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -40,12 +39,12 @@ import static org.junit.Assert.assertEquals;
  * @see CartesianCoordinateTest
  */
 @RunWith(Parameterized.class)
-public class CoordinateEqualsTest {
+public class CoordinateEqualityTest {
 	private Coordinate[] first;
 	private Coordinate[] second;
 	private boolean isEqual;
 
-	public CoordinateEqualsTest(double[] first, double[] second, boolean isEqual) {
+	public CoordinateEqualityTest(double[] first, double[] second, boolean isEqual) {
 		this.first = new Coordinate[]{getCartesianCoordinate(first), getSphericCoordinate(first)};
 		this.second = new Coordinate[]{getCartesianCoordinate(second), getSphericCoordinate(second)};
 		this.isEqual = isEqual;
@@ -80,24 +79,24 @@ public class CoordinateEqualsTest {
 				{new double[]{-0, 0, -0}, new double[]{0, -0, 0}, true},
 				{new double[]{0, -0, 0}, new double[]{-0, 0, -0}, true},
 
-				{new double[]{0, 0, 0}, new double[]{NaN, 0, 0}, false},
-				{new double[]{0, 0, 0}, new double[]{0, NaN, 0}, false},
-				{new double[]{0, 0, 0}, new double[]{0, 0, NaN}, false},
-				{new double[]{NaN, NaN, NaN}, new double[]{NaN, NaN, NaN}, false},
+				//{new double[]{0, 0, 0}, new double[]{NaN, 0, 0}, false},
+				//{new double[]{0, 0, 0}, new double[]{0, NaN, 0}, false},
+				//{new double[]{0, 0, 0}, new double[]{0, 0, NaN}, false},
+				//{new double[]{NaN, NaN, NaN}, new double[]{NaN, NaN, NaN}, false},
 
-				{new double[]{POSITIVE_INFINITY, NEGATIVE_INFINITY, POSITIVE_INFINITY}, new double[]{POSITIVE_INFINITY, NEGATIVE_INFINITY, POSITIVE_INFINITY}, false},
-				{new double[]{NEGATIVE_INFINITY, POSITIVE_INFINITY, NEGATIVE_INFINITY}, new double[]{NEGATIVE_INFINITY, POSITIVE_INFINITY, NEGATIVE_INFINITY}, false},
-				{new double[]{0, 0, 0}, new double[]{POSITIVE_INFINITY, 0, 0}, false},
-				{new double[]{0, 0, 0}, new double[]{NEGATIVE_INFINITY, 0, 0}, false},
-				{new double[]{0, 0, 0}, new double[]{0, POSITIVE_INFINITY, 0}, false},
-				{new double[]{0, 0, 0}, new double[]{0, NEGATIVE_INFINITY, 0}, false},
-				{new double[]{0, 0, 0}, new double[]{0, 0, POSITIVE_INFINITY}, false},
-				{new double[]{0, 0, 0}, new double[]{0, 0, NEGATIVE_INFINITY}, false},
+				//{new double[]{POSITIVE_INFINITY, NEGATIVE_INFINITY, POSITIVE_INFINITY}, new double[]{POSITIVE_INFINITY, NEGATIVE_INFINITY, POSITIVE_INFINITY}, false},
+				//{new double[]{NEGATIVE_INFINITY, POSITIVE_INFINITY, NEGATIVE_INFINITY}, new double[]{NEGATIVE_INFINITY, POSITIVE_INFINITY, NEGATIVE_INFINITY}, false},
+				//{new double[]{0, 0, 0}, new double[]{POSITIVE_INFINITY, 0, 0}, false},
+				//{new double[]{0, 0, 0}, new double[]{NEGATIVE_INFINITY, 0, 0}, false},
+				//{new double[]{0, 0, 0}, new double[]{0, POSITIVE_INFINITY, 0}, false},
+				//{new double[]{0, 0, 0}, new double[]{0, NEGATIVE_INFINITY, 0}, false},
+				//{new double[]{0, 0, 0}, new double[]{0, 0, POSITIVE_INFINITY}, false},
+				//{new double[]{0, 0, 0}, new double[]{0, 0, NEGATIVE_INFINITY}, false},
 
-				{new double[]{1.23456789, -9.87654321, 0.000001}, new double[]{1.23456789, -9.87654321, 0.000001}, true},
-				{new double[]{2.64, 0, 0}, new double[]{4.64 - 2.0, 0, 0}, true},
-				{new double[]{410, 0, 0}, new double[]{4.10 * 100, 0, 0}, true},
-				{new double[]{0, 410, 0}, new double[]{0, 4.10 * 100, 0}, true},
+				{new double[]{1.23456789, -0.87654321, 0.000001}, new double[]{1.23456789, -0.87654321, 0.000001}, true},
+				{new double[]{0, 2.64, 0}, new double[]{0, 4.64 - 2.0, 0}, true},
+				{new double[]{0.41, 0, 0}, new double[]{0.0041 * 100, 0, 0}, true},
+				{new double[]{0, 0.41, 0}, new double[]{0, 0.0041 * 100, 0}, true},
 				{new double[]{0, 0, 410}, new double[]{0, 0, 4.10 * 100}, true},
 				{new double[]{0.123456789, 0, 0}, new double[]{0.123456999, 0, 0}, true},
 		});

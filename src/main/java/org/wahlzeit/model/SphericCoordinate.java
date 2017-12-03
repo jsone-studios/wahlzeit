@@ -54,7 +54,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	@Override
-	public CartesianCoordinate asCartesianCoordinate() {
+	protected CartesianCoordinate doAsCartesianCoordinate() {
 		double x = radius * Math.sin(latitude) * Math.cos(longitude);
 		double y = radius * Math.sin(latitude) * Math.sin(longitude);
 		double z = radius * Math.cos(latitude);
@@ -62,7 +62,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	}
 
 	@Override
-	public SphericCoordinate asSphericCoordinate() {
+	protected SphericCoordinate doAsSphericCoordinate() {
 		return this;
 	}
 
@@ -70,39 +70,34 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * Calculates the direct distance between this object and the given coordinate.
 	 * This delegates the call to the {@link Coordinate#getCartesianDistance(Coordinate)} implementation of the {@link CartesianCoordinate}
 	 *
-	 * @param other Coordinate
-	 * @return the direct distance, or {@link Double#NaN} if other is <code>null</code>
+	 * @param other Coordinate, should not be <code>null</code>
+	 * @return the direct distance
 	 */
 	@Override
-	public double getCartesianDistance(Coordinate other) {
-		if (other == null) {
-			return Double.NaN;
-		}
+	protected double doGetCartesianDistance(Coordinate other) {
 		CartesianCoordinate thisAsCartesian = this.asCartesianCoordinate();
 		return thisAsCartesian.getCartesianDistance(other);
 	}
 
-	/**
-	 * Calculates the spheric distance between this object and the given coordinate.
-	 * If the given coordinate is not a {@link SphericCoordinate} it is transformed to one.
-	 *
-	 * @param other Coordinate
-	 * @return the spheric distance, or {@link Double#NaN} if other is <code>null</code
-	 */
 	@Override
-	public double getSphericDistance(Coordinate other) {
-		if (other == null) {
-			return Double.NaN;
-		}
+	protected double doGetSphericDistance(Coordinate other) {
 		SphericCoordinate otherAsSpheric = other.asSphericCoordinate();
 		double a = Math.cos(this.longitude) * Math.cos(otherAsSpheric.longitude) * Math.cos(this.latitude - this.latitude)
 				+ Math.sin(this.longitude) * Math.sin(otherAsSpheric.longitude);
-		double distance = Math.acos(a);
+		double distance = Math.acos(a) * this.radius;
 		if (Double.compare(this.radius, otherAsSpheric.radius) != 0) {
 			log.warning("Can not calculate SphericDistance of two spheric coordinates with different radius!");
 		}
-		
-		return this.radius * distance;
+		return distance;
+	}
+
+	@Override
+	protected void assertClassInvariants()
+	{
+		super.assertClassInvariants();
+		assert -(Math.PI/2) <= latitude && latitude <= Math.PI/2;
+		assert -Math.PI <= longitude && longitude <= Math.PI;
+		assert 0 <= radius;
 	}
 
 	private boolean isEqual(SphericCoordinate other) {

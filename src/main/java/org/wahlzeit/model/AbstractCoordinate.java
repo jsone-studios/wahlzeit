@@ -27,19 +27,94 @@ public abstract class AbstractCoordinate implements Coordinate {
 
 	private static final double DELTA = 1E-6;
 
+	@Override
+	public CartesianCoordinate asCartesianCoordinate() {
+		assertClassInvariants();
+
+		CartesianCoordinate coordinate = doAsCartesianCoordinate();
+
+		assert coordinate != null;
+		assertClassInvariants();
+		return coordinate;
+	}
+
+	protected abstract CartesianCoordinate doAsCartesianCoordinate();
+
+	@Override
+	public SphericCoordinate asSphericCoordinate() {
+		assertClassInvariants();
+
+		SphericCoordinate coordinate = doAsSphericCoordinate();
+
+		assert coordinate != null;
+		assertClassInvariants();
+		return coordinate;
+	}
+
+	protected abstract SphericCoordinate doAsSphericCoordinate();
+
 	/**
 	 * Calculates the direct distance between this object and the given coordinate.
-	 * Delegates to {@link #getCartesianDistance(Coordinate)}
+	 * Delegates to {@link #doGetCartesianDistance(Coordinate)}
 	 *
 	 * @param other Coordinate
 	 * @return the direct distance
 	 */
 	@Override
 	public double getDistance(Coordinate other) {
-		if (other == null) {
-			return Double.NaN;
-		}
-		return getCartesianDistance(other);
+		assertClassInvariants();
+		assertArgumentNotNull(other);
+
+		double distance = doGetCartesianDistance(other);
+
+		assert distance >= 0;
+		assertClassInvariants();
+		return distance;
+	}
+
+	/**
+	 * Calculates the direct distance between this object and the given coordinate.
+	 *
+	 * @param other Coordinate, should not be <code>null</code>
+	 * @return the direct distance
+	 */
+	@Override
+	public double getCartesianDistance(Coordinate other) {
+		assertClassInvariants();
+		assertArgumentNotNull(other);
+
+		double distance = this.doGetCartesianDistance(other);
+
+		assert distance >= 0;
+		assertClassInvariants();
+		return distance;
+	}
+
+	protected abstract double doGetCartesianDistance(Coordinate other);
+
+	/**
+	 * Calculates the spheric distance between this object and the given coordinate.
+	 *
+	 * @param other Coordinate, should not be <code>null</code>
+	 * @return the spheric distance
+	 */
+	@Override
+	public double getSphericDistance(Coordinate other) {
+		assertClassInvariants();
+		assertArgumentNotNull(other);
+
+		double distance = this.doGetSphericDistance(other);
+
+		assert distance >= 0;
+		assertClassInvariants();
+		return distance;
+	}
+
+	protected abstract double doGetSphericDistance(Coordinate other);
+
+	@Override
+	public boolean isEqual(Coordinate coordinate) {
+		return false;
 	}
 
 	/**
@@ -53,6 +128,16 @@ public abstract class AbstractCoordinate implements Coordinate {
 	protected boolean isDoubleEqual(double a, double b) {
 		return Math.abs(a - b) <= DELTA;
 	}
+
+	protected void assertArgumentNotNull(Object object)
+	{
+		if (object == null)
+		{
+			throw new IllegalArgumentException("null is not a valid method argument");
+		}
+	}
+
+	protected void assertClassInvariants() {}
 
 	@Override
 	public abstract int hashCode();

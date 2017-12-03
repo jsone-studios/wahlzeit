@@ -30,7 +30,7 @@ import org.wahlzeit.model.persistence.PersistenceTestSuite;
 		BeachPhotoFactoryTest.class,
 		BeachPhotoManagerTest.class,
 		CartesianCoordinateTest.class,
-		CoordinateEqualsTest.class,
+		CoordinateEqualityTest.class,
 		FlagReasonTest.class,
 		GenderTest.class,
 		GuestTest.class,
