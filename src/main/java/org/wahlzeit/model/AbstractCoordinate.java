@@ -21,7 +21,7 @@
 package org.wahlzeit.model;
 
 /**
- * AbstractCoordinate is an abstraction  between {@link Coordinate} interface and its implementation
+ * AbstractCoordinate is an abstraction between {@link Coordinate} interface and its implementation
  */
 public abstract class AbstractCoordinate implements Coordinate {
 
@@ -63,11 +63,11 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public double getDistance(Coordinate other) {
 		assertClassInvariants();
-		assertArgumentNotNull(other);
+		throwIfArgumentNotNull(other);
 
 		double distance = doGetCartesianDistance(other);
 
-		assert distance >= 0;
+		assertIsDistance(distance);
 		assertClassInvariants();
 		return distance;
 	}
@@ -81,11 +81,11 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public double getCartesianDistance(Coordinate other) {
 		assertClassInvariants();
-		assertArgumentNotNull(other);
+		throwIfArgumentNotNull(other);
 
 		double distance = this.doGetCartesianDistance(other);
 
-		assert distance >= 0;
+		assertIsDistance(distance);
 		assertClassInvariants();
 		return distance;
 	}
@@ -101,21 +101,16 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public double getSphericDistance(Coordinate other) {
 		assertClassInvariants();
-		assertArgumentNotNull(other);
+		throwIfArgumentNotNull(other);
 
 		double distance = this.doGetSphericDistance(other);
 
-		assert distance >= 0;
+		assertIsDistance(distance);
 		assertClassInvariants();
 		return distance;
 	}
 
 	protected abstract double doGetSphericDistance(Coordinate other);
-
-	@Override
-	public boolean isEqual(Coordinate coordinate) {
-		return false;
-	}
 
 	/**
 	 * This compares two double values on equality.
@@ -129,15 +124,18 @@ public abstract class AbstractCoordinate implements Coordinate {
 		return Math.abs(a - b) <= DELTA;
 	}
 
-	protected void assertArgumentNotNull(Object object)
-	{
+	protected void throwIfArgumentNotNull(Object object) {
 		if (object == null)
 		{
 			throw new IllegalArgumentException("null is not a valid method argument");
 		}
 	}
 
-	protected void assertClassInvariants() {}
+	protected void assertIsDistance(double distance){
+		assert distance >= 0;
+	}
+
+	protected abstract void assertClassInvariants();
 
 	@Override
 	public abstract int hashCode();

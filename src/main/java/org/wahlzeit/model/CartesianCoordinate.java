@@ -32,6 +32,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private double z;
 
 	public CartesianCoordinate(double x, double y, double z) {
+		if (!isValidCartesianCoordinates(x, y, z)) {
+			throw new IllegalArgumentException("Given cartesian coordinate is not valid");
+		}
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -85,6 +88,15 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	protected double doGetSphericDistance(Coordinate other) {
 		SphericCoordinate thisAsSpheric = this.asSphericCoordinate();
 		return thisAsSpheric.getSphericDistance(other);
+	}
+
+	@Override
+	protected void assertClassInvariants() {
+		assert isValidCartesianCoordinates(x, y, z);
+	}
+
+	private static boolean isValidCartesianCoordinates(double x, double y, double z) {
+		return !Double.isNaN(x) && !Double.isNaN(y) && !Double.isNaN(z);
 	}
 
 	private boolean isEqual(CartesianCoordinate other) {
