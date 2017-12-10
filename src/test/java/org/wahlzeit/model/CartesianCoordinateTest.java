@@ -59,34 +59,34 @@ public class CartesianCoordinateTest {
 	public void testAsSphericCoordinate() {
 		CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(1, 2, 3);
 		SphericCoordinate sphericCoordinate = cartesianCoordinate.asSphericCoordinate();
-		assertEquals(new SphericCoordinate(0.640522,1.107148,3.741657), sphericCoordinate);
+		assertEquals(new SphericCoordinate(-0.930274,1.107148,3.741657), sphericCoordinate);
 
 		cartesianCoordinate = new CartesianCoordinate(1, 2, -3);
 		sphericCoordinate = cartesianCoordinate.asSphericCoordinate();
-		assertEquals(new SphericCoordinate(2.501070,1.107148,3.741657), sphericCoordinate);
+		assertEquals(new SphericCoordinate(0.930274,1.107148,3.741657), sphericCoordinate);
 
 		cartesianCoordinate = new CartesianCoordinate(1, -2, 3);
 		sphericCoordinate = cartesianCoordinate.asSphericCoordinate();
-		assertEquals(new SphericCoordinate(0.640522,-1.107148,3.741657), sphericCoordinate);
+		assertEquals(new SphericCoordinate(-0.930274,-1.107148,3.741657), sphericCoordinate);
 
 		cartesianCoordinate = new CartesianCoordinate(1, -2, -3);
 		sphericCoordinate = cartesianCoordinate.asSphericCoordinate();
-		assertEquals(new SphericCoordinate(2.501070,-1.107148,3.741657), sphericCoordinate);
+		assertEquals(new SphericCoordinate(0.930274,-1.107148,3.741657), sphericCoordinate);
 
 		cartesianCoordinate = new CartesianCoordinate(-1, 2, 3);
 		sphericCoordinate = cartesianCoordinate.asSphericCoordinate();
-		assertEquals(new SphericCoordinate(0.640522,2.034443,3.741657), sphericCoordinate);
+		assertEquals(new SphericCoordinate(-0.930274,2.034443,3.741657), sphericCoordinate);
 
 		cartesianCoordinate = new CartesianCoordinate(-1, 2, -3);
 		sphericCoordinate = cartesianCoordinate.asSphericCoordinate();
-		assertEquals(new SphericCoordinate(2.501070,2.034443,3.741657), sphericCoordinate);
+		assertEquals(new SphericCoordinate(0.930274,2.034443,3.741657), sphericCoordinate);
 
 		cartesianCoordinate = new CartesianCoordinate(-1, -2, 3);
 		sphericCoordinate = cartesianCoordinate.asSphericCoordinate();
-		assertEquals(new SphericCoordinate(0.640522,-2.034443,3.741657), sphericCoordinate);
+		assertEquals(new SphericCoordinate(-0.930274,-2.034443,3.741657), sphericCoordinate);
 
 		cartesianCoordinate = new CartesianCoordinate(-1, -2, -3);
 		sphericCoordinate = cartesianCoordinate.asSphericCoordinate();
-		assertEquals(new SphericCoordinate(2.501070,-2.034443,3.741657), sphericCoordinate);
+		assertEquals(new SphericCoordinate(0.930274,-2.034443,3.741657), sphericCoordinate);
 	}
 }

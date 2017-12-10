@@ -65,6 +65,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		}
 		double latitude = Math.acos(z / radius);
 		double longitude = Math.atan2(y, x);
+		latitude -= Math.PI/2;
 		return new SphericCoordinate(latitude, longitude, radius);
 	}
 

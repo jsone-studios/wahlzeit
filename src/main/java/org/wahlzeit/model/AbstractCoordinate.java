@@ -63,7 +63,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public double getDistance(Coordinate other) {
 		assertClassInvariants();
-		throwIfArgumentNotNull(other);
+		throwIfArgumentNull(other);
 
 		double distance = doGetCartesianDistance(other);
 
@@ -81,7 +81,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public double getCartesianDistance(Coordinate other) {
 		assertClassInvariants();
-		throwIfArgumentNotNull(other);
+		throwIfArgumentNull(other);
 
 		double distance = this.doGetCartesianDistance(other);
 
@@ -101,7 +101,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 	@Override
 	public double getSphericDistance(Coordinate other) {
 		assertClassInvariants();
-		throwIfArgumentNotNull(other);
+		throwIfArgumentNull(other);
 
 		double distance = this.doGetSphericDistance(other);
 
@@ -124,7 +124,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 		return Math.abs(a - b) <= DELTA;
 	}
 
-	protected void throwIfArgumentNotNull(Object object) {
+	protected void throwIfArgumentNull(Object object) {
 		if (object == null)
 		{
 			throw new IllegalArgumentException("null is not a valid method argument");
