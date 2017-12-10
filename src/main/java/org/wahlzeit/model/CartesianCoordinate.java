@@ -32,7 +32,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private double z;
 
 	public CartesianCoordinate(double x, double y, double z) {
-		if (!isValidCartesianCoordinates(x, y, z)) {
+		if (isNonValidCartesianCoordinates(x, y, z)) {
 			throw new IllegalArgumentException("Given cartesian coordinate is not valid");
 		}
 		this.x = x;
@@ -93,11 +93,14 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 	@Override
 	protected void assertClassInvariants() {
-		assert isValidCartesianCoordinates(x, y, z);
+		if (isNonValidCartesianCoordinates(x, y, z))
+		{
+			throw new InvalidClassInvariantException("Cartesian coordinate does not fulfil the class invariant");
+		}
 	}
 
-	private static boolean isValidCartesianCoordinates(double x, double y, double z) {
-		return !Double.isNaN(x) && !Double.isNaN(y) && !Double.isNaN(z);
+	private static boolean isNonValidCartesianCoordinates(double x, double y, double z) {
+		return Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z);
 	}
 
 	private boolean isEqual(CartesianCoordinate other) {

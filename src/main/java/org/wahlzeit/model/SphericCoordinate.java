@@ -36,7 +36,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	private double radius;
 
 	public SphericCoordinate(double latitude, double longitude, double radius) {
-		if (!isValidSphericCoordinate(latitude, longitude, radius)) {
+		if (isNonValidSphericCoordinate(latitude, longitude, radius)) {
 			throw new IllegalArgumentException("Given spheric coordinate is not valid");
 		}
 		this.latitude = latitude;
@@ -96,14 +96,17 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 	@Override
 	protected void assertClassInvariants() {
-		assert isValidSphericCoordinate(latitude, longitude, radius);
+		if (isNonValidSphericCoordinate(latitude, longitude, radius))
+		{
+			throw new InvalidClassInvariantException("Cartesian coordinate does not fulfil the class invariant");
+		}
 	}
 
-	private static boolean isValidSphericCoordinate(double latitude, double longitude, double radius) {
+	private static boolean isNonValidSphericCoordinate(double latitude, double longitude, double radius) {
 		boolean isValidLatitude = -(Math.PI/2) <= latitude && latitude <= Math.PI/2;
 		boolean isValidLongitude = -Math.PI <= longitude && longitude <= Math.PI;
 		boolean isValidRadius = radius >= 0;
-		return isValidLatitude && isValidLongitude && isValidRadius;
+		return !isValidLatitude || !isValidLongitude || !isValidRadius;
 	}
 
 	private boolean isEqual(SphericCoordinate other) {
