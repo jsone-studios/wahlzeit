@@ -31,6 +31,8 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private final double y;
 	private final double z;
 
+	private final SphericCoordinate sphericCoordinate;
+
 	public CartesianCoordinate(double x, double y, double z) {
 		if (isNonValidCartesianCoordinates(x, y, z)) {
 			throw new IllegalArgumentException("Given cartesian coordinate is not valid");
@@ -38,6 +40,17 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.sphericCoordinate = getSphericCoordinate(x, y, z);
+	}
+
+	protected CartesianCoordinate(double x, double y, double z, SphericCoordinate sphericCoordinate) {
+		if (isNonValidCartesianCoordinates(x, y, z)) {
+			throw new IllegalArgumentException("Given cartesian coordinate is not valid");
+		}
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.sphericCoordinate = sphericCoordinate;
 	}
 
 	public double getX() {
@@ -59,14 +72,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 	@Override
 	protected SphericCoordinate doAsSphericCoordinate() {
-		double radius = Math.sqrt(x * x + y * y + z * z);
-		if (radius == 0.0) {
-			return new SphericCoordinate(0.0, 0.0, 0.0);
-		}
-		double latitude = Math.acos(z / radius);
-		double longitude = Math.atan2(y, x);
-		latitude -= Math.PI/2;
-		return new SphericCoordinate(latitude, longitude, radius);
+		return sphericCoordinate;
 	}
 
 	@Override
@@ -101,6 +107,17 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 	private static boolean isNonValidCartesianCoordinates(double x, double y, double z) {
 		return Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z);
+	}
+
+	private SphericCoordinate getSphericCoordinate(double x, double y, double z) {
+		double radius = Math.sqrt(x * x + y * y + z * z);
+		if (radius == 0.0) {
+			return new SphericCoordinate(0.0, 0.0, 0.0);
+		}
+		double latitude = Math.acos(z / radius);
+		double longitude = Math.atan2(y, x);
+		latitude -= Math.PI/2;
+		return new SphericCoordinate(latitude, longitude, radius, this);
 	}
 
 	private boolean isEqual(CartesianCoordinate other) {

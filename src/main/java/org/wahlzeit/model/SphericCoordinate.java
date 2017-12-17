@@ -35,6 +35,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 	private final double longitude;
 	private final double radius;
 
+	private final CartesianCoordinate cartesianCoordinate;
+
 	public SphericCoordinate(double latitude, double longitude, double radius) {
 		if (isNonValidSphericCoordinate(latitude, longitude, radius)) {
 			throw new IllegalArgumentException("Given spheric coordinate is not valid");
@@ -42,6 +44,17 @@ public class SphericCoordinate extends AbstractCoordinate {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
+		this.cartesianCoordinate = getCartesianCoordinate(latitude, longitude, radius);
+	}
+
+	protected SphericCoordinate(double latitude, double longitude, double radius, CartesianCoordinate cartesianCoordinate) {
+		if (isNonValidSphericCoordinate(latitude, longitude, radius)) {
+			throw new IllegalArgumentException("Given spheric coordinate is not valid");
+		}
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.radius = radius;
+		this.cartesianCoordinate = cartesianCoordinate;
 	}
 
 	public double getLatitude() {
@@ -58,10 +71,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 	@Override
 	protected CartesianCoordinate doAsCartesianCoordinate() {
-		double x = radius * Math.sin(latitude) * Math.cos(longitude);
-		double y = radius * Math.sin(latitude) * Math.sin(longitude);
-		double z = radius * Math.cos(latitude);
-		return new CartesianCoordinate(x, y, z);
+		return this.cartesianCoordinate;
 	}
 
 	@Override
@@ -107,6 +117,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 		boolean isValidLongitude = -Math.PI <= longitude && longitude <= Math.PI;
 		boolean isValidRadius = radius >= 0;
 		return !isValidLatitude || !isValidLongitude || !isValidRadius;
+	}
+
+	private CartesianCoordinate getCartesianCoordinate(double latitude, double longitude, double radius)
+	{
+		double x = radius * Math.sin(latitude) * Math.cos(longitude);
+		double y = radius * Math.sin(latitude) * Math.sin(longitude);
+		double z = radius * Math.cos(latitude);
+		return new CartesianCoordinate(x, y, z, this);
 	}
 
 	private boolean isEqual(SphericCoordinate other) {
