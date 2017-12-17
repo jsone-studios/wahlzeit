@@ -27,9 +27,9 @@ import java.util.Objects;
  */
 public class CartesianCoordinate extends AbstractCoordinate {
 
-	private double x;
-	private double y;
-	private double z;
+	private final double x;
+	private final double y;
+	private final double z;
 
 	public CartesianCoordinate(double x, double y, double z) {
 		if (isNonValidCartesianCoordinates(x, y, z)) {
@@ -114,10 +114,14 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	public boolean isEqual(Coordinate other) {
 		if (this == other) {
 			return true;
-		} else if (other instanceof CartesianCoordinate) {
-			return isEqual((CartesianCoordinate) other);
+		} else if (other == null) {
+			return false;
 		}
-		return false;
+		//else if (other instanceof CartesianCoordinate) {
+		//	return isEqual((CartesianCoordinate) other);
+		//}
+		CartesianCoordinate otherAsCartesian = other.asCartesianCoordinate();
+		return isEqual(otherAsCartesian);
 	}
 
 	@Override

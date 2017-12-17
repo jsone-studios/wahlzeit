@@ -31,9 +31,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 	private static final Logger log = Logger.getLogger(SphericCoordinate.class.getName());
 
-	private double latitude;
-	private double longitude;
-	private double radius;
+	private final double latitude;
+	private final double longitude;
+	private final double radius;
 
 	public SphericCoordinate(double latitude, double longitude, double radius) {
 		if (isNonValidSphericCoordinate(latitude, longitude, radius)) {
@@ -120,10 +120,14 @@ public class SphericCoordinate extends AbstractCoordinate {
 	public boolean isEqual(Coordinate other) {
 		if (this == other) {
 			return true;
-		} else if (other instanceof SphericCoordinate) {
-			return isEqual((SphericCoordinate) other);
+		} else if (other == null) {
+			return false;
 		}
-		return false;
+		//else if (other instanceof SphericCoordinate) {
+		//	return isEqual((SphericCoordinate) other);
+		//}
+		SphericCoordinate otherAsSpheric = other.asSphericCoordinate();
+		return isEqual(otherAsSpheric);
 	}
 
 	@Override
