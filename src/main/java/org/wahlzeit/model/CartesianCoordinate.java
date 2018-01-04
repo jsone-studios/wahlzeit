@@ -31,26 +31,13 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private final double y;
 	private final double z;
 
-	private final SphericCoordinate sphericCoordinate;
-
-	public CartesianCoordinate(double x, double y, double z) {
+	CartesianCoordinate(double x, double y, double z) {
 		if (isNonValidCartesianCoordinates(x, y, z)) {
 			throw new IllegalArgumentException("Given cartesian coordinate is not valid");
 		}
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.sphericCoordinate = getSphericCoordinate(x, y, z);
-	}
-
-	protected CartesianCoordinate(double x, double y, double z, SphericCoordinate sphericCoordinate) {
-		if (isNonValidCartesianCoordinates(x, y, z)) {
-			throw new IllegalArgumentException("Given cartesian coordinate is not valid");
-		}
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.sphericCoordinate = sphericCoordinate;
 	}
 
 	public double getX() {
@@ -72,7 +59,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
 	@Override
 	protected SphericCoordinate doAsSphericCoordinate() {
-		return sphericCoordinate;
+		return getSphericCoordinate(x, y, z);
 	}
 
 	@Override
@@ -112,33 +99,22 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	private SphericCoordinate getSphericCoordinate(double x, double y, double z) {
 		double radius = Math.sqrt(x * x + y * y + z * z);
 		if (radius == 0.0) {
-			return new SphericCoordinate(0.0, 0.0, 0.0);
+			return SphericCoordinateHelper.getInstance().getSphericCoordinate(0.0, 0.0, 0.0);
 		}
 		double latitude = Math.acos(z / radius);
 		double longitude = Math.atan2(y, x);
 		latitude -= Math.PI/2;
-		return new SphericCoordinate(latitude, longitude, radius, this);
-	}
-
-	private boolean isEqual(CartesianCoordinate other) {
-		return this == other
-				|| (isDoubleEqual(this.x, other.x)
-					&& isDoubleEqual(this.y, other.y)
-					&& isDoubleEqual(this.z, other.z));
+		return SphericCoordinateHelper.getInstance().getSphericCoordinate(latitude, longitude, radius);
 	}
 
 	@Override
 	public boolean isEqual(Coordinate other) {
-		if (this == other) {
-			return true;
-		} else if (other == null) {
+		if (other == null) {
 			return false;
+		} else if (this == other) {
+			return true;
 		}
-		//else if (other instanceof CartesianCoordinate) {
-		//	return isEqual((CartesianCoordinate) other);
-		//}
-		CartesianCoordinate otherAsCartesian = other.asCartesianCoordinate();
-		return isEqual(otherAsCartesian);
+		return this == other.asCartesianCoordinate();
 	}
 
 	@Override

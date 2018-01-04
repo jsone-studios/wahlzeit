@@ -35,26 +35,13 @@ public class SphericCoordinate extends AbstractCoordinate {
 	private final double longitude;
 	private final double radius;
 
-	private final CartesianCoordinate cartesianCoordinate;
-
-	public SphericCoordinate(double latitude, double longitude, double radius) {
+	SphericCoordinate(double latitude, double longitude, double radius) {
 		if (isNonValidSphericCoordinate(latitude, longitude, radius)) {
 			throw new IllegalArgumentException("Given spheric coordinate is not valid");
 		}
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
-		this.cartesianCoordinate = getCartesianCoordinate(latitude, longitude, radius);
-	}
-
-	protected SphericCoordinate(double latitude, double longitude, double radius, CartesianCoordinate cartesianCoordinate) {
-		if (isNonValidSphericCoordinate(latitude, longitude, radius)) {
-			throw new IllegalArgumentException("Given spheric coordinate is not valid");
-		}
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.radius = radius;
-		this.cartesianCoordinate = cartesianCoordinate;
 	}
 
 	public double getLatitude() {
@@ -71,7 +58,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 	@Override
 	protected CartesianCoordinate doAsCartesianCoordinate() {
-		return this.cartesianCoordinate;
+		return getCartesianCoordinate(latitude, longitude, radius);
 	}
 
 	@Override
@@ -124,28 +111,17 @@ public class SphericCoordinate extends AbstractCoordinate {
 		double x = radius * Math.sin(latitude) * Math.cos(longitude);
 		double y = radius * Math.sin(latitude) * Math.sin(longitude);
 		double z = radius * Math.cos(latitude);
-		return new CartesianCoordinate(x, y, z, this);
-	}
-
-	private boolean isEqual(SphericCoordinate other) {
-		return this == other
-				|| (isDoubleEqual(this.latitude, other.latitude)
-				&& isDoubleEqual(this.longitude, other.longitude)
-				&& isDoubleEqual(this.radius, other.radius));
+		return CartesianCoordinateHelper.getInstance().getCartesianCoordinate(x, y, z);
 	}
 
 	@Override
 	public boolean isEqual(Coordinate other) {
-		if (this == other) {
-			return true;
-		} else if (other == null) {
+		if (other == null) {
 			return false;
+		} else if (this == other) {
+			return true;
 		}
-		//else if (other instanceof SphericCoordinate) {
-		//	return isEqual((SphericCoordinate) other);
-		//}
-		SphericCoordinate otherAsSpheric = other.asSphericCoordinate();
-		return isEqual(otherAsSpheric);
+		return this == other.asSphericCoordinate();
 	}
 
 	@Override

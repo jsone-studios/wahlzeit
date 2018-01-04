@@ -30,7 +30,7 @@ public class LocationTest {
 
 	@Test
 	public void testGetCoordinate() {
-		CartesianCoordinate coordinate = new CartesianCoordinate(1, 1, 1);
+		CartesianCoordinate coordinate = CartesianCoordinateHelper.getInstance().getCartesianCoordinate(1, 1, 1);
 		Location location = new Location(coordinate);
 		Coordinate result = location.getCoordinate();
 		Assert.assertNotNull(result);

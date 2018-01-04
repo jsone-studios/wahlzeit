@@ -36,6 +36,7 @@ import org.wahlzeit.model.persistence.PersistenceTestSuite;
 		GuestTest.class,
 		LocationTest.class,
 		PhotoFilterTest.class,
+		SphericCoordinateTest.class,
 		TagsTest.class,
 		UserStatusTest.class,
 		ValueTest.class,
