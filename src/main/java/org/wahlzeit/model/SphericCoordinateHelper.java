@@ -24,12 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SphericCoordinateHelper {
-	private static SphericCoordinateHelper instance;
+	private static SphericCoordinateHelper instance = new SphericCoordinateHelper();
 
 	public synchronized static SphericCoordinateHelper getInstance() {
-		if (instance == null) {
-			instance = new SphericCoordinateHelper();
-		}
 		return instance;
 	}
 

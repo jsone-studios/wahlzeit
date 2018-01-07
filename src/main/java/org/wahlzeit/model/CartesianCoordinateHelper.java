@@ -25,12 +25,9 @@ import java.util.Map;
 
 public class CartesianCoordinateHelper {
 
-	private static CartesianCoordinateHelper instance;
+	private static CartesianCoordinateHelper instance = new CartesianCoordinateHelper();
 
 	public synchronized static CartesianCoordinateHelper getInstance() {
-		if (instance == null) {
-			instance = new CartesianCoordinateHelper();
-		}
 		return instance;
 	}
 
