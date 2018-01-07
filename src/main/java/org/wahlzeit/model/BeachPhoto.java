@@ -21,7 +21,12 @@
 package org.wahlzeit.model;
 
 import com.googlecode.objectify.annotation.Subclass;
+import org.wahlzeit.utils.DesignPattern;
 
+@DesignPattern(
+		name = "Abstract Factory",
+		participants = {"ConcreteProduct"}
+)
 @Subclass
 public class BeachPhoto extends Photo {
 	private String weather;

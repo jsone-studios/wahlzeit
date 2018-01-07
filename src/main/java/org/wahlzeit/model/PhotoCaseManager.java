@@ -21,17 +21,14 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.services.ObjectManager;
+import org.wahlzeit.utils.DesignPattern;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The photo case manager provides access to and manages persistent photo cases.
  */
+@DesignPattern(name = "Singleton", participants = {})
 public class PhotoCaseManager extends ObjectManager {
 
 	/**

@@ -21,9 +21,15 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.services.LogBuilder;
+import org.wahlzeit.utils.DesignPattern;
 
 import java.util.logging.Logger;
 
+@DesignPattern(
+		name = "Abstract Factory",
+		participants = {"ConcreteFactory"}
+)
+@DesignPattern(name = "Singleton", participants = {})
 public class BeachPhotoFactory extends PhotoFactory {
 
 	private static final Logger log = Logger.getLogger(BeachPhotoFactory.class.getName());

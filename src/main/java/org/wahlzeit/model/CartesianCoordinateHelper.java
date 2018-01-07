@@ -20,9 +20,12 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.DesignPattern;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@DesignPattern(name = "Singleton", participants = {})
 public class CartesianCoordinateHelper {
 
 	private static CartesianCoordinateHelper instance = new CartesianCoordinateHelper();
