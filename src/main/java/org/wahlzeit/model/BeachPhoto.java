@@ -29,13 +29,15 @@ import org.wahlzeit.utils.DesignPattern;
 )
 @Subclass
 public class BeachPhoto extends Photo {
+	private Beach beach;
+
 	private String weather;
-	private boolean hasSharks;
 
 	/**
 	 * @methodtype constructor
 	 */
 	public BeachPhoto() {
+		super();
 	}
 
 	/**
@@ -43,6 +45,20 @@ public class BeachPhoto extends Photo {
 	 */
 	public BeachPhoto(PhotoId myId) {
 		super(myId);
+	}
+
+	/**
+	 * @methodtype get
+	 */
+	public Beach getBeach() {
+		return beach;
+	}
+
+	/**
+	 * @methodtype set
+	 */
+	public void setBeach(Beach beach) {
+		this.beach = beach;
 	}
 
 	/**
@@ -57,13 +73,5 @@ public class BeachPhoto extends Photo {
 	 */
 	public void setWeather(String weather) {
 		this.weather = weather;
-	}
-
-	public boolean hasSharks() {
-		return hasSharks;
-	}
-
-	public void setHasSharks(boolean hasSharks) {
-		this.hasSharks = hasSharks;
 	}
 }

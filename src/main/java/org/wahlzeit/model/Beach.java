@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017
+ * Copyright (c) 2018
  *
  * This file is part of the Wahlzeit photo rating application.
  *
@@ -20,30 +20,50 @@
 
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.PersistenceTestSuite;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import org.wahlzeit.services.DataObject;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-		AccessRightsTest.class,
-		BeachManagerTest.class,
-		BeachPhotoFactoryTest.class,
-		BeachPhotoManagerTest.class,
-		BeachTypeTest.class,
-		CartesianCoordinateTest.class,
-		CoordinateEqualityTest.class,
-		FlagReasonTest.class,
-		GenderTest.class,
-		GuestTest.class,
-		LocationTest.class,
-		PhotoFilterTest.class,
-		SphericCoordinateTest.class,
-		TagsTest.class,
-		UserStatusTest.class,
-		ValueTest.class,
+@Entity
+public class Beach extends DataObject {
 
-		PersistenceTestSuite.class,
-})
-public class ModelTestSuite {
+	@Id
+	private final String name;
+
+	private boolean hasSharks;
+
+	private final BeachType beachType;
+
+	public Beach(String name, BeachType beachType) {
+		this.name = name;
+		this.beachType = beachType;
+	}
+
+	/**
+	 * @methodtype get
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @methodtype get
+	 */
+	public BeachType getBeachType() {
+		return beachType;
+	}
+
+	/**
+	 * @methodtype get
+	 */
+	public boolean hasSharks() {
+		return hasSharks;
+	}
+
+	/**
+	 * @methodtype set
+	 */
+	public void setHasSharks(boolean hasSharks) {
+		this.hasSharks = hasSharks;
+	}
 }

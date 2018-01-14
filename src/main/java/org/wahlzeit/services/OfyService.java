@@ -19,6 +19,8 @@ public class OfyService {
 	static {
 		factory().register(Photo.class);
 		factory().register(BeachPhoto.class);
+		factory().register(Beach.class);
+		factory().register(BeachType.class);
 		factory().register(Globals.class);
 		factory().register(Tag.class);
 		factory().register(User.class);
