@@ -21,12 +21,15 @@
 package org.wahlzeit.model;
 
 import com.google.common.base.Objects;
+import org.wahlzeit.utils.DesignPattern;
 
 import java.util.logging.Logger;
 
 /**
  * SphericCoordinate represents spheric coordinates on earth.
  */
+@DesignPattern(name = "Template", participants = "Concrete class")
+@DesignPattern(name = "Value Object", participants = {})
 public class SphericCoordinate extends AbstractCoordinate {
 
 	private static final Logger log = Logger.getLogger(SphericCoordinate.class.getName());

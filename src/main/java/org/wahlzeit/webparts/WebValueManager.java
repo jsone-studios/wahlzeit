@@ -20,6 +20,8 @@
 
 package org.wahlzeit.webparts;
 
+import org.wahlzeit.utils.DesignPattern;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +29,7 @@ import java.util.Map;
  * The WebValueManager provides (and creates on-demand) WebValues.
  * It constructs the data for a WebValue from the provided arguments.
  */
+@DesignPattern(name = "Singleton", participants = {})
 public class WebValueManager {
 
 	/**

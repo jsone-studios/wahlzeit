@@ -20,11 +20,15 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.DesignPattern;
+
 import java.util.Objects;
 
 /**
  * CartesianCoordinate represents cartesian coordinates on earth.
  */
+@DesignPattern(name = "Template", participants = "Concrete class")
+@DesignPattern(name = "Value Object", participants = {})
 public class CartesianCoordinate extends AbstractCoordinate {
 
 	private final double x;

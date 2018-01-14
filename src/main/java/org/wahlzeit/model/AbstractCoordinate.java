@@ -20,9 +20,12 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.DesignPattern;
+
 /**
  * AbstractCoordinate is an abstraction between {@link Coordinate} interface and its implementation
  */
+@DesignPattern(name = "Template", participants = "Abstract class")
 public abstract class AbstractCoordinate implements Coordinate {
 
 	private static final double DELTA = 1E-6;
